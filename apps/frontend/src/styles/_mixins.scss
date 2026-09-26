@@ -47,6 +47,11 @@
 	font: inherit;
 	font-size: var(--font-size-1);
 
+	// iOS zooms the page on focus for inputs under 16px; keep desktop density.
+	@media (pointer: coarse) {
+		font-size: max(var(--font-size-1), 16px);
+	}
+
 	@include control-transition(border-color);
 
 	&:hover {
@@ -55,6 +60,52 @@
 
 	&[aria-invalid='true'] {
 		border-color: var(--color-danger);
+	}
+}
+
+// Breakpoints for the builder workspace layout, named by what happens at
+// each width (docs/features/builder.md "Layout"). Only used where the
+// layout actually changes shape — most components stay fluid and don't
+// need these.
+@mixin below-tablet {
+	@media (width <= 1100px) {
+		@content;
+	}
+}
+
+@mixin below-stacked {
+	@media (width <= 900px) {
+		@content;
+	}
+}
+
+@mixin below-phone {
+	@media (width <= 600px) {
+		@content;
+	}
+}
+
+@mixin coarse-pointer {
+	@media (pointer: coarse) {
+		@content;
+	}
+}
+
+// Expands a control's tap target on touch without changing its visual
+// size, via an invisible centered pseudo-element at least
+// --control-height-lg (40px) square.
+@mixin touch-target($selector: '&::after') {
+	@include coarse-pointer {
+		position: relative;
+
+		#{$selector} {
+			content: '';
+			position: absolute;
+			inset: 50%;
+			width: max(var(--control-height-lg), 100%);
+			height: max(var(--control-height-lg), 100%);
+			transform: translate(-50%, -50%);
+		}
 	}
 }
 

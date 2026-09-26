@@ -50,14 +50,14 @@ export const HEAD_ICON_LOGO = {
 // The dot's own diameter, in the icon's native coordinate units.
 export const HEAD_ICON_DOT_SIZE = 75;
 
-type LogoDrawContext = {
+interface LogoDrawContext {
 	save: () => void;
 	restore: () => void;
 	translate: (x: number, y: number) => void;
 	scale: (x: number, y: number) => void;
 	fill: (path: Path2D) => void;
 	fillStyle: CanvasRenderingContext2D['fillStyle'];
-};
+}
 
 export const drawHeadIconLogo = ({
 	context,
@@ -78,11 +78,9 @@ export const drawHeadIconLogo = ({
 }): void => {
 	const scale = width / HEAD_ICON_LOGO.width;
 	context.save();
+	// eslint-disable-next-line no-param-reassign
 	context.fillStyle = color;
-	context.translate(
-		x - HEAD_ICON_LOGO.minX * scale,
-		y - HEAD_ICON_LOGO.minY * scale,
-	);
+	context.translate(x - HEAD_ICON_LOGO.minX * scale, y - HEAD_ICON_LOGO.minY * scale);
 	context.scale(scale, scale);
 	context.fill(createPath({ d: HEAD_ICON_ARC_D }));
 	context.save();

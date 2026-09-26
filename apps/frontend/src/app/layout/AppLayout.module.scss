@@ -1,7 +1,20 @@
+@use '../../styles/mixins' as *;
+
 .shell {
 	position: fixed;
 	inset: 0;
 	width: 100vw;
 	height: 100dvh;
 	overflow: hidden;
+
+	// Below tablet width the page itself scrolls (see global.scss /
+	// BuilderPage.module.scss) — a fixed, clipped shell would cut off
+	// content that now flows past the viewport.
+	@include below-stacked {
+		position: static;
+		width: auto;
+		height: auto;
+		min-height: 100dvh;
+		overflow: visible;
+	}
 }

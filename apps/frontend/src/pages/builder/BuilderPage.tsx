@@ -21,12 +21,14 @@ import { getToolsTitle } from '@builder/ui/tool-labels';
 import { ToolsContent } from '@builder/ui/ToolsContent';
 
 import { IconButton } from '@components/IconButton/IconButton';
-import { SidebarIcon } from '@components/icons/Icons';
+import { CloseIcon, SidebarIcon } from '@components/icons/Icons';
 import { Kbd } from '@components/Kbd/Kbd';
 import { LanguageSelect } from '@components/LanguageSelect/LanguageSelect';
 import { Panel } from '@components/Panel/Panel';
 import { Select } from '@components/Select/Select';
 import { ThemeToggle } from '@components/ThemeToggle/ThemeToggle';
+
+import { useMediaQuery } from '@hooks/useMediaQuery';
 
 import { useLanguageStore } from '@store/language-store';
 import { useThemeStore } from '@store/theme-store';
@@ -40,6 +42,8 @@ const BuilderCanvas = lazy(async () => {
 });
 
 const TOOLS_ID = 'builder-tools';
+// Matches the below-stacked breakpoint in _mixins.scss.
+const MOBILE_QUERY = '(width <= 900px)';
 
 const STEP_FOCUS: Readonly<Record<BuilderStep, CameraFocus>> = {
 	frame: 'overview',
@@ -72,6 +76,10 @@ export function BuilderPage(): React.JSX.Element {
 	const setLighting = useLightingStore((state) => state.setPreset);
 	const [isToolsOpen, setIsToolsOpen] = useState(true);
 	const [isStepsOpen, setIsStepsOpen] = useState(true);
+	const isMobile = useMediaQuery({ query: MOBILE_QUERY });
+	const [isViewportMaximized, setIsViewportMaximized] = useState(false);
+	const isViewportStatic = isMobile && !isViewportMaximized;
+	const isViewportFullscreen = isMobile && isViewportMaximized;
 
 	return (
 		<div className={styles.page}>
@@ -84,7 +92,9 @@ export function BuilderPage(): React.JSX.Element {
 				<div className={styles.headerActions}>
 					<HistoryToolbar className={styles.toolbar} />
 					<span className={styles.divider} aria-hidden="true" />
-					<LanguageSelect />
+					<span className={styles.languageSelect}>
+						<LanguageSelect />
+					</span>
 					<ThemeToggle />
 				</div>
 			</header>
@@ -100,29 +110,59 @@ export function BuilderPage(): React.JSX.Element {
 						</div>
 					</Panel>
 				) : null}
-				<section className={styles.viewport} aria-label="3D racket preview">
-					<Suspense fallback={<p className={styles.loading}>Loading 3D scene…</p>}>
-						<BuilderCanvas
-							colors={sceneColors}
-							printImage={print.image}
-							stickerImages={stickerImages}
-							focus={STEP_FOCUS[tool.step]}
-							lighting={lighting}
-							isLightingAnimated={!prefersReducedMotion()}
-						/>
-					</Suspense>
-					<div className={styles.viewportBar}>
-						<IconButton
-							label={isToolsOpen ? 'Hide tools' : 'Show tools'}
-							size="sm"
-							aria-pressed={isToolsOpen}
-							aria-controls={TOOLS_ID}
+				<section
+					className={styles.viewport}
+					data-maximized={isViewportFullscreen}
+					aria-label="3D racket preview"
+				>
+					<div className={styles.canvasLayer} data-interactive={!isViewportStatic}>
+						<Suspense fallback={<p className={styles.loading}>Loading 3D scene…</p>}>
+							<BuilderCanvas
+								colors={sceneColors}
+								printImage={print.image}
+								stickerImages={stickerImages}
+								focus={STEP_FOCUS[tool.step]}
+								lighting={lighting}
+								isLightingAnimated={!prefersReducedMotion()}
+								resizeSignal={isViewportMaximized}
+							/>
+						</Suspense>
+					</div>
+					{isViewportStatic ? (
+						<button
+							type="button"
+							className={styles.expandOverlay}
 							onClick={() => {
-								setIsToolsOpen(!isToolsOpen);
+								setIsViewportMaximized(true);
 							}}
 						>
-							<SidebarIcon className={styles.flipped} />
-						</IconButton>
+							<span className={styles.expandHint}>Tap to rotate</span>
+						</button>
+					) : null}
+					<div className={styles.viewportBar}>
+						{isViewportFullscreen ? (
+							<IconButton
+								label="Close"
+								size="md"
+								onClick={() => {
+									setIsViewportMaximized(false);
+								}}
+							>
+								<CloseIcon />
+							</IconButton>
+						) : (
+							<IconButton
+								label={isToolsOpen ? 'Hide tools' : 'Show tools'}
+								size="sm"
+								aria-pressed={isToolsOpen}
+								aria-controls={TOOLS_ID}
+								onClick={() => {
+									setIsToolsOpen(!isToolsOpen);
+								}}
+							>
+								<SidebarIcon className={styles.flipped} />
+							</IconButton>
+						)}
 						<p className={styles.hints}>
 							<span>Drag to rotate</span>
 							<span>Scroll to zoom</span>
@@ -155,17 +195,19 @@ export function BuilderPage(): React.JSX.Element {
 								}}
 							/>
 						</div>
-						<IconButton
-							label={isStepsOpen ? 'Hide steps' : 'Show steps'}
-							size="sm"
-							aria-pressed={isStepsOpen}
-							aria-controls={STEPS_ID}
-							onClick={() => {
-								setIsStepsOpen(!isStepsOpen);
-							}}
-						>
-							<SidebarIcon />
-						</IconButton>
+						{isViewportFullscreen ? null : (
+							<IconButton
+								label={isStepsOpen ? 'Hide steps' : 'Show steps'}
+								size="sm"
+								aria-pressed={isStepsOpen}
+								aria-controls={STEPS_ID}
+								onClick={() => {
+									setIsStepsOpen(!isStepsOpen);
+								}}
+							>
+								<SidebarIcon />
+							</IconButton>
+						)}
 					</div>
 				</section>
 				{isStepsOpen ? (
