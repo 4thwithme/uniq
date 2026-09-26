@@ -428,7 +428,7 @@ export const upgradeGripV4ToV5 = (grip: GripSpecV4): GripSpec => ({
 	customHex: null,
 	overgrip:
 		grip.overgrip === null
-			? null
+			? DEFAULT_GRIP.overgrip
 			: {
 					colorId: grip.overgrip.colorId,
 					material: grip.overgrip.finish === 'gloss' ? 'tacky' : 'dry',

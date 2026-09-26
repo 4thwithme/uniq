@@ -187,7 +187,7 @@ export function ButtCapEditor(): React.JSX.Element {
 			setButtCap({
 				next: {
 					...buttCap,
-					badge: { kind: 'text', text: 'HEAD', colorId: badgeColorId },
+					badge: { kind: 'text', text: 'UQ', colorId: badgeColorId },
 				},
 			});
 		}

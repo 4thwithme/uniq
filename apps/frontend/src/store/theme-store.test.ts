@@ -28,7 +28,7 @@ describe('theme store', () => {
 		window.localStorage.setItem(THEME_STORAGE_KEY, 'neon');
 		mockMatchMedia({ matches: true });
 
-		expect(readInitialTheme()).toBe('light');
+		expect(readInitialTheme()).toBe('dark');
 	});
 
 	it('defaults to dark without matchMedia', () => {

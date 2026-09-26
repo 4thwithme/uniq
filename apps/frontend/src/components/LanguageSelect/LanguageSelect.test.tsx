@@ -11,13 +11,13 @@ describe('LanguageSelect', () => {
 		render(<LanguageSelect />);
 		const trigger = screen.getByRole('combobox', { name: 'Design language' });
 
-		expect(trigger).toHaveTextContent('UNIQ Studio');
-		await user.click(trigger);
-		await user.click(screen.getByRole('option', { name: /HEAD/u }));
-
-		expect(useLanguageStore.getState().language).toBe('head');
-		expect(document.documentElement.dataset['language']).toBe('head');
-		expect(window.localStorage.getItem(LANGUAGE_STORAGE_KEY)).toBe('head');
 		expect(trigger).toHaveTextContent('HEAD');
+		await user.click(trigger);
+		await user.click(screen.getByRole('option', { name: /UNIQ Studio/u }));
+
+		expect(useLanguageStore.getState().language).toBe('uniq');
+		expect(document.documentElement.dataset['language']).toBe('uniq');
+		expect(window.localStorage.getItem(LANGUAGE_STORAGE_KEY)).toBe('uniq');
+		expect(trigger).toHaveTextContent('UNIQ Studio');
 	});
 });

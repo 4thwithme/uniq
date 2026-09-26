@@ -1,4 +1,5 @@
 import {
+	DEFAULT_GRIP,
 	DESIGN_SCHEMA_VERSION,
 	isDesignDocument,
 	isDesignDocumentV1,
@@ -254,7 +255,9 @@ describe('@uniq/shared v3 overlays, layers and grip', () => {
 		expect(upgradeDesignDocument(v1)).toEqual({
 			...base,
 			racketModelId: 'm',
+			grip: { ...base.grip, overgrip: DEFAULT_GRIP.overgrip },
 			finishingTape: null,
+			overlays: { ...base.overlays, frame: { ...base.overlays.frame, print: null } },
 		});
 		expect(upgradeDesignDocument(base)).toBe(base);
 		expect(upgradeDesignDocument({ schemaVersion: 1 })).toBeNull();
@@ -297,9 +300,24 @@ describe('@uniq/shared v3 overlays, layers and grip', () => {
 		expect(upgraded).toEqual({
 			...base,
 			racketModelId: 'm',
-			grip: { ...base.grip, colorId: 'red', finish: 'gloss' },
+			grip: {
+				...base.grip,
+				colorId: 'red',
+				finish: 'gloss',
+				overgrip: DEFAULT_GRIP.overgrip,
+			},
 			finishingTape: null,
 			layers: [frameShape],
+			overlays: {
+				...base.overlays,
+				frame: {
+					...base.overlays.frame,
+					print:
+						base.overlays.frame.print === null
+							? null
+							: { ...base.overlays.frame.print, offsetY: 0.5 },
+				},
+			},
 		});
 		expect(Object.keys(upgraded?.overlays ?? {})).toEqual(['frame', 'throat']);
 	});

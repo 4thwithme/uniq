@@ -13,7 +13,7 @@ describe('BuilderPage', () => {
 
 		expect(await screen.findByTestId('builder-canvas')).toBeInTheDocument();
 		expect(
-			screen.getByRole('heading', { level: 1, name: 'Design your racket' }),
+			screen.getByRole('heading', { level: 1, name: 'Make your HEAD unique' }),
 		).toBeInTheDocument();
 		expect(screen.getByRole('region', { name: 'Frame · Color' })).toBeInTheDocument();
 		expect(screen.getByRole('region', { name: 'Steps' })).toBeInTheDocument();

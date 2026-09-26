@@ -98,7 +98,11 @@ export function BuilderPage(): React.JSX.Element {
 					<ThemeToggle />
 				</div>
 			</header>
-			<div className={styles.workspace}>
+			<div
+				className={styles.workspace}
+				data-tools-open={isToolsOpen}
+				data-steps-open={isStepsOpen}
+			>
 				{isToolsOpen ? (
 					<Panel title={getToolsTitle({ tool })} className={styles.toolsPanel}>
 						<div
@@ -124,7 +128,7 @@ export function BuilderPage(): React.JSX.Element {
 								focus={STEP_FOCUS[tool.step]}
 								lighting={lighting}
 								isLightingAnimated={!prefersReducedMotion()}
-								resizeSignal={isViewportMaximized}
+								resizeSignal={`${Number(isViewportMaximized)}:${Number(isToolsOpen)}:${Number(isStepsOpen)}`}
 							/>
 						</Suspense>
 					</div>

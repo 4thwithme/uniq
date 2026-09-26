@@ -23,7 +23,7 @@ export const BADGE_COLORS: readonly GripColor[] = [
 export const BADGE_PRESET_IDS = ['monogram', 'ball', 'star', 'bolt'] as const;
 export type BadgePresetId = (typeof BADGE_PRESET_IDS)[number];
 
-export const BADGE_TEXT_PATTERN = /^[A-Z0-9]{1,4}$/;
+export const BADGE_TEXT_PATTERN = /^[A-Z0-9]{1,3}$/;
 
 export type ButtCapBadge =
 	| { kind: 'none' }
@@ -39,7 +39,7 @@ export interface ButtCapSpec {
 export const DEFAULT_BUTT_CAP: ButtCapSpec = {
 	colorId: 'black',
 	finish: 'gloss',
-	badge: { kind: 'text', text: 'HEAD', colorId: 'white' },
+	badge: { kind: 'preset', presetId: 'monogram', colorId: 'white' },
 };
 
 export const findButtCapColor = ({ colorId }: { colorId: string }): GripColor | null =>
@@ -51,5 +51,5 @@ export const findBadgeColor = ({ colorId }: { colorId: string }): GripColor | nu
 export const normalizeBadgeText = ({ text }: { text: string }): string =>
 	text
 		.toUpperCase()
-		.replace(/[^A-Z0-9]/g, '')
-		.slice(0, 4);
+		.replace(/[^A-Z]/g, '')
+		.slice(0, 3);

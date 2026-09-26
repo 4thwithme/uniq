@@ -19,6 +19,7 @@ export interface GripMaterialSpec {
 	colors: readonly GripColor[];
 	textures: readonly GripTexture[];
 	finishes: readonly GripFinish[];
+	resetsOvergrip: boolean;
 }
 
 export const GRIP_CATALOG: Readonly<Record<GripMaterial, GripMaterialSpec>> = {
@@ -33,6 +34,7 @@ export const GRIP_CATALOG: Readonly<Record<GripMaterial, GripMaterialSpec>> = {
 		],
 		textures: ['smooth', 'perforated'],
 		finishes: ['matte'],
+		resetsOvergrip: true,
 	},
 	synthetic: {
 		name: 'Synthetic',
@@ -51,6 +53,7 @@ export const GRIP_CATALOG: Readonly<Record<GripMaterial, GripMaterialSpec>> = {
 		],
 		textures: ['smooth', 'perforated', 'grooved'],
 		finishes: ['matte', 'gloss'],
+		resetsOvergrip: false,
 	},
 };
 
@@ -187,7 +190,7 @@ export const withGripMaterial = ({
 			: (firstTexture ?? 'smooth'),
 		customHex: grip.customHex,
 		finish: spec.finishes.includes(grip.finish) ? grip.finish : (firstFinish ?? 'matte'),
-		overgrip: grip.overgrip,
+		overgrip: spec.resetsOvergrip ? null : grip.overgrip,
 	};
 };
 
