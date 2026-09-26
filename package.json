@@ -1,0 +1,25 @@
+{
+	"name": "uniq",
+	"version": "0.0.1",
+	"description": "Custom tennis racket paintjobs, stickers and themes — 3D design builder platform",
+	"private": true,
+	"license": "UNLICENSED",
+	"engines": {
+		"node": ">=v24.13.0",
+		"npm": ">=11.0.0"
+	},
+	"workspaces": [
+		"packages/shared",
+		"apps/frontend"
+	],
+	"scripts": {
+		"dev": "npm run dev -w apps/frontend",
+		"build": "npm run build --workspaces --if-present",
+		"lint": "npm run lint --workspaces --if-present",
+		"type-check": "npm run type-check --workspaces --if-present",
+		"test": "npm run test --workspaces --if-present"
+	},
+	"devDependencies": {
+		"husky": "^9.1.7"
+	}
+}

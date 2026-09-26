@@ -1,0 +1,30 @@
+@use '../../styles/mixins' as *;
+
+.root {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-1);
+}
+
+.label {
+	@include field-label;
+}
+
+.input {
+	width: 100%;
+
+	@include sunken-input;
+
+	&::placeholder {
+		color: var(--color-text-subtle);
+	}
+}
+
+.hint {
+	color: var(--color-text-muted);
+	font-size: var(--font-size-0);
+
+	&[data-tone='error'] {
+		color: var(--color-danger);
+	}
+}

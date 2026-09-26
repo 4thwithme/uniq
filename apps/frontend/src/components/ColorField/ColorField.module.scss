@@ -1,0 +1,66 @@
+@use '../../styles/mixins' as *;
+
+.root {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-1);
+}
+
+.label {
+	@include field-label;
+}
+
+.row {
+	display: flex;
+	gap: var(--space-2);
+}
+
+.swatch {
+	flex: none;
+	width: var(--control-height-md);
+	height: var(--control-height-md);
+	padding: 2px;
+	border: var(--border-width) solid var(--color-border-strong);
+	border-radius: var(--radius-1);
+	background: var(--color-surface-sunken);
+	cursor: pointer;
+
+	@include control-transition(transform, border-color);
+
+	&:hover {
+		transform: scale(1.06);
+	}
+
+	&:active {
+		transform: scale(var(--motion-scale-press));
+	}
+
+	&::-webkit-color-swatch-wrapper {
+		padding: 0;
+	}
+
+	&::-webkit-color-swatch {
+		border: 0;
+		border-radius: var(--radius-1);
+	}
+
+	&::-moz-color-swatch {
+		border: 0;
+		border-radius: var(--radius-1);
+	}
+}
+
+.hex {
+	font-family: var(--font-family-numeric);
+	flex: 1;
+	min-width: 0;
+	font-variant-numeric: tabular-nums;
+	text-transform: uppercase;
+
+	@include sunken-input;
+}
+
+.error {
+	color: var(--color-danger);
+	font-size: var(--font-size-0);
+}

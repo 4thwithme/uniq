@@ -1,0 +1,13 @@
+node_modules/
+dist/
+/data/
+coverage*/
+.env
+.env.test
+*.log
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.tsbuildinfo
+apps/frontend/src/**/*.module.scss.d.ts

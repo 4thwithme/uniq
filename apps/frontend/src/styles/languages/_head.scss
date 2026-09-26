@@ -1,0 +1,88 @@
+[data-language='head'] {
+	--font-family-display: 'Inter Variable', Roboto, Arial, sans-serif;
+	--font-family-base: 'Inter Variable', Roboto, Arial, sans-serif;
+	--font-family-label: var(--font-family-base);
+	--font-family-numeric: var(--font-family-base);
+
+	--font-size-0: 0.75rem;
+	--font-size-1: 0.875rem;
+	--font-size-2: 1rem;
+	--font-size-3: 1.25rem;
+	--font-size-4: 1.75rem;
+	--font-size-5: 2.5rem;
+	--font-size-6: 3.25rem;
+
+	--font-weight-label: 600;
+	--font-weight-control: 700;
+	--tracking-display: -0.02em;
+	--tracking-caps: 0.02em;
+	--tracking-label: -0.006em;
+	--text-transform-label: none;
+
+	--radius-0: 0;
+	--radius-1: 4px;
+	--radius-2: 8px;
+
+	--control-height-sm: 36px;
+	--control-height-md: 40px;
+	--control-height-lg: 45px;
+
+	--duration-fast: 100ms;
+	--duration-base: 150ms;
+	--duration-slow: 300ms;
+	--ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-language='head'],
+[data-language='head'] [data-theme='dark'] {
+	--color-bg: #121212;
+	--color-surface: #1d1d1f;
+	--color-surface-raised: #26272b;
+	--color-surface-sunken: #161618;
+	--color-border: #333741;
+	--color-border-strong: #7a7d85;
+	--color-text: #f5f5f6;
+	--color-text-muted: #a3a5ab;
+	--color-text-subtle: #85888e;
+	--color-accent: #ed5109;
+	--color-accent-hover: #fc6c13;
+	--color-accent-subtle: #3a1e12;
+	--color-accent-text: #fc7a2f;
+	--color-on-accent: #121212;
+	--color-focus: #fc6c13;
+	--color-danger: #f97066;
+	--color-warning: #fdb022;
+	--color-success: #47cd89;
+	--shadow-float: 0 12px 16px -4px rgb(0 0 0 / 40%), 0 4px 6px -2px rgb(0 0 0 / 24%);
+
+	--scene-bg: #121212;
+	--scene-grid-cell: #1f1f21;
+	--scene-grid-section: #2e2e32;
+}
+
+[data-language='head'][data-theme='light'],
+[data-language='head'] [data-theme='light'] {
+	--color-bg: #fdf9f8;
+	--color-surface: #ffffff;
+	--color-surface-raised: #f5f1ef;
+	--color-surface-sunken: #f2f4f7;
+	--color-border: #e5e5e5;
+	--color-border-strong: #858585;
+	--color-text: #1a1a1a;
+	--color-text-muted: #6b6b6b;
+	--color-text-subtle: #8a8f99;
+	--color-accent: #d5400a;
+	--color-accent-hover: #9c2f10;
+	--color-accent-subtle: #fdebe3;
+	--color-accent-text: #b33508;
+	--color-on-accent: #ffffff;
+	--color-focus: #fc6c13;
+	--color-danger: #d92d20;
+	--color-warning: #b54708;
+	--color-success: #067647;
+	--shadow-float: 0 12px 16px -4px rgb(16 24 40 / 8%), 0 4px 6px -2px rgb(16 24 40 / 3%);
+
+	--scene-bg: #f4efed;
+	--scene-grid-cell: #e6e0de;
+	--scene-grid-section: #d3cbc8;
+}

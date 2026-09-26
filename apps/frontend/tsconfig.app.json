@@ -1,0 +1,27 @@
+{
+	"extends": "./tsconfig.base.json",
+	"compilerOptions": {
+		"tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+		"lib": ["ES2023", "DOM", "DOM.Iterable"],
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
+		"jsx": "react-jsx",
+		"types": ["vite/client"],
+		"baseUrl": "./",
+		"paths": {
+			"@app/*": ["src/app/*"],
+			"@pages/*": ["src/pages/*"],
+			"@builder/*": ["src/builder/*"],
+			"@components/*": ["src/components/*"],
+			"@hooks/*": ["src/hooks/*"],
+			"@store/*": ["src/store/*"],
+			"@styles/*": ["src/styles/*"],
+			"@assets/*": ["src/assets/*"],
+			"@app-types/*": ["src/types/*"],
+			"@uniq/shared": ["../../packages/shared/src/index.ts"]
+		}
+	},
+	"include": ["src"],
+	"exclude": ["src/**/*.test.ts", "src/**/*.test.tsx"]
+}
