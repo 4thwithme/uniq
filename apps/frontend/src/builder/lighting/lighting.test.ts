@@ -134,19 +134,19 @@ describe('applyLightingState', () => {
 
 describe('lighting store', () => {
 	afterEach(() => {
-		useLightingStore.setState({ presetId: 'daylight' });
+		useLightingStore.setState({ presetId: 'cloudy' });
 	});
 
-	it('defaults to daylight, reads and saves the choice', () => {
-		expect(readInitialLighting()).toBe('daylight');
+	it('defaults to cloudy, reads and saves the choice', () => {
+		expect(readInitialLighting()).toBe('cloudy');
 		window.localStorage.setItem(LIGHTING_STORAGE_KEY, 'night');
 		expect(readInitialLighting()).toBe('night');
 		window.localStorage.setItem(LIGHTING_STORAGE_KEY, 'storm');
-		expect(readInitialLighting()).toBe('daylight');
+		expect(readInitialLighting()).toBe('cloudy');
 
-		useLightingStore.getState().setPreset({ presetId: 'cloudy' });
-		expect(useLightingStore.getState().presetId).toBe('cloudy');
-		expect(window.localStorage.getItem(LIGHTING_STORAGE_KEY)).toBe('cloudy');
+		useLightingStore.getState().setPreset({ presetId: 'daylight' });
+		expect(useLightingStore.getState().presetId).toBe('daylight');
+		expect(window.localStorage.getItem(LIGHTING_STORAGE_KEY)).toBe('daylight');
 	});
 
 	it('survives blocked storage', () => {
@@ -157,7 +157,7 @@ describe('lighting store', () => {
 			throw new Error('blocked');
 		});
 
-		expect(readInitialLighting()).toBe('daylight');
+		expect(readInitialLighting()).toBe('cloudy');
 		useLightingStore.getState().setPreset({ presetId: 'night' });
 		expect(useLightingStore.getState().presetId).toBe('night');
 	});

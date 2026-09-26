@@ -18,12 +18,12 @@ export const readInitialTheme = (): ColorTheme => {
 			return stored;
 		}
 	} catch {
-		return 'light';
+		return 'dark';
 	}
-	const prefersDark =
-		typeof window.matchMedia === 'function' &&
-		window.matchMedia('(prefers-color-scheme: dark)').matches;
-	return prefersDark ? 'dark' : 'light';
+	if (typeof window.matchMedia !== 'function') {
+		return 'dark';
+	}
+	return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 };
 
 export const applyTheme = ({ theme }: { theme: ColorTheme }): void => {

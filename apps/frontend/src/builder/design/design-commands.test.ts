@@ -147,7 +147,7 @@ describe('design-commands', () => {
 				kind: 'gradient',
 				angle: 0,
 				stops: [
-					{ offset: 0, color: '#c6ff3d' },
+					{ offset: 0, color: '#030303' },
 					{ offset: 1, color: '#00ff00' },
 				],
 			});

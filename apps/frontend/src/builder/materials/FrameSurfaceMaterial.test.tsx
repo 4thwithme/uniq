@@ -105,7 +105,7 @@ describe('FrameSurfaceMaterial', () => {
 		});
 
 		expect(material.map).toBeNull();
-		expect(material.color.equals(new Color('#c6ff3d'))).toBe(true);
+		expect(material.color.equals(new Color('#030303'))).toBe(true);
 		await unmount();
 	});
 

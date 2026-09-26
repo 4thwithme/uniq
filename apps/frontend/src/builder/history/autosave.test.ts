@@ -1,3 +1,5 @@
+import { DEFAULT_GRIP } from '@uniq/shared';
+
 import { createDefaultDesign } from '@builder/design/default-design';
 import {
 	AUTOSAVE_STORAGE_KEY,
@@ -26,8 +28,15 @@ describe('autosave', () => {
 		};
 		window.localStorage.setItem(AUTOSAVE_STORAGE_KEY, JSON.stringify(v1));
 
+		const defaultDesign = createDefaultDesign();
+
 		expect(loadDraft({ storage: window.localStorage })).toEqual({
-			...createDefaultDesign(),
+			...defaultDesign,
+			grip: { ...defaultDesign.grip, overgrip: DEFAULT_GRIP.overgrip },
+			overlays: {
+				...defaultDesign.overlays,
+				frame: { ...defaultDesign.overlays.frame, print: null },
+			},
 			finishingTape: null,
 			meta: { name: 'Old design', themeId: 'volt' },
 		});

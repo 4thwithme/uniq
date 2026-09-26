@@ -42,9 +42,9 @@ describe('useDesignStore', () => {
 		undo();
 		expect(frameColor()).toBe('#111111');
 		undo();
-		expect(frameColor()).toBe('#c6ff3d');
+		expect(frameColor()).toBe('#030303');
 		undo();
-		expect(frameColor()).toBe('#c6ff3d');
+		expect(frameColor()).toBe('#030303');
 
 		redo();
 		redo();

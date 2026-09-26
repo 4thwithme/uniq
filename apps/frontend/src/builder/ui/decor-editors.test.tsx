@@ -83,7 +83,7 @@ describe('PrintEditor', () => {
 			scale: 0.5,
 			repeat: 4,
 			offset: 0.3,
-			offsetY: 0.5,
+			offsetY: 1,
 		});
 
 		fireEvent.click(screen.getByRole('radio', { name: 'None' }));
@@ -116,13 +116,14 @@ describe('PrintEditor', () => {
 		['big.png', 'image/png', MAX_PRINT_BYTES + 1, /larger than 10 MB/u],
 	])('rejects %s', async (name, type, size, message) => {
 		render(<PrintEditor status="none" store={createMemoryAssetStore()} />);
+		const printBeforeUpload = frame().print;
 		const file = new File(['x'], name, { type });
 		Object.defineProperty(file, 'size', { value: size });
 
 		await upload({ file });
 
 		expect(await screen.findByRole('alert')).toHaveTextContent(message);
-		expect(frame().print).toBeNull();
+		expect(frame().print).toEqual(printBeforeUpload);
 	});
 
 	it('explains when the browser cannot store the file', async () => {
@@ -143,7 +144,8 @@ describe('PrintEditor', () => {
 	] as const)('shows the %s notice', (status, message) => {
 		render(<PrintEditor status={status} store={createMemoryAssetStore()} />);
 
-		expect(screen.getByRole('status')).toHaveTextContent(message);
+		const notice = screen.getByText(message);
+		expect(notice).toHaveAttribute('role', 'status');
 	});
 });
 
@@ -243,7 +245,7 @@ describe('StepsNav and CheckoutFooter', () => {
 			'aria-current',
 			'step',
 		);
-		expect(nav.getByRole('button', { name: /^Color\s*#c6ff3d/iu })).toHaveAttribute(
+		expect(nav.getByRole('button', { name: /^Color\s*#030303/iu })).toHaveAttribute(
 			'aria-current',
 			'true',
 		);
@@ -276,7 +278,7 @@ describe('StepsNav and CheckoutFooter', () => {
 		await user.click(nav.getByRole('button', { name: /Grip Cap/u }));
 		expect(useDesignStore.getState().tool.step).toBe('buttCap');
 		expect(nav.getByRole('button', { name: /Grip Cap/u })).toHaveTextContent(
-			'Black · HEAD in white',
+			'Black · UNIQ monogram in white',
 		);
 		expect(nav.queryByRole('button', { name: /Theme/u })).not.toBeInTheDocument();
 	});

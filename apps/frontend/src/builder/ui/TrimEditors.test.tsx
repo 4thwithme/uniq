@@ -93,7 +93,7 @@ describe('trim commands and labels', () => {
 
 	it('describes trims', () => {
 		expect(describeTrim({ trim: null })).toBe('—');
-		expect(describeTrim({ trim: DEFAULT_GROMMETS })).toBe('Black · gloss');
+		expect(describeTrim({ trim: DEFAULT_GROMMETS })).toBe('Black · matte');
 		expect(describeTrim({ trim: { colorId: 'x', finish: 'matte' } })).toBe(' · matte');
 	});
 });
@@ -115,8 +115,7 @@ describe('FinishingTapeEditor', () => {
 		const user = userEvent.setup();
 		render(<FinishingTapeEditor />);
 
-		expect(screen.getByRole('radio', { name: 'Black' })).toBeChecked();
-		await user.click(screen.getByRole('radio', { name: 'White' }));
+		expect(screen.getByRole('radio', { name: 'White' })).toBeChecked();
 		await user.click(screen.getByRole('radio', { name: 'Gloss' }));
 		expect(document().finishingTape).toEqual({ colorId: 'white', finish: 'gloss' });
 

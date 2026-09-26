@@ -76,18 +76,32 @@
 }
 
 .workspace {
+	--tools-col: var(--panel-width);
+	--steps-col: 280px;
+
 	display: grid;
 	grid-template-areas: 'tools viewport steps';
-	grid-template-columns: var(--panel-width) minmax(0, 1fr) 280px;
+	grid-template-columns: var(--tools-col) minmax(0, 1fr) var(--steps-col);
 	gap: var(--space-3);
 	min-width: 0;
 	min-height: 0;
+
+	// A hidden panel isn't rendered, but its grid track is still reserved
+	// unless we zero it out here — otherwise the viewport doesn't expand
+	// into the space the closed panel used to occupy.
+	&[data-tools-open='false'] {
+		--tools-col: 0px;
+	}
+
+	&[data-steps-open='false'] {
+		--steps-col: 0px;
+	}
 
 	@include below-tablet {
 		grid-template-areas:
 			'tools viewport'
 			'steps steps';
-		grid-template-columns: var(--panel-width) minmax(0, 1fr);
+		grid-template-columns: var(--tools-col) minmax(0, 1fr);
 		grid-template-rows: minmax(0, 1fr) auto;
 	}
 

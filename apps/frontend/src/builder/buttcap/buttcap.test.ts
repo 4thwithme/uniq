@@ -1,6 +1,7 @@
 import {
 	BADGE_TEXT_PATTERN,
 	DEFAULT_BUTT_CAP,
+	DEFAULT_GRIP,
 	findBadgeColor,
 	findButtCapColor,
 	isDesignDocument,
@@ -205,7 +206,21 @@ describe('v3 to v4 upgrade', () => {
 		expect(upgraded.schemaVersion).toBe(4);
 		expect(upgraded.buttCap).toEqual(DEFAULT_BUTT_CAP);
 		expect(upgraded.buttCap).not.toBe(DEFAULT_BUTT_CAP);
-		expect(upgradeDesignDocument(v3)).toEqual({ ...base, finishingTape: null });
+		expect(upgradeDesignDocument(v3)).toEqual({
+			...base,
+			grip: { ...base.grip, overgrip: DEFAULT_GRIP.overgrip },
+			finishingTape: null,
+			overlays: {
+				...base.overlays,
+				frame: {
+					...base.overlays.frame,
+					print:
+						base.overlays.frame.print === null
+							? null
+							: { ...base.overlays.frame.print, offsetY: 0.5 },
+				},
+			},
+		});
 	});
 });
 
