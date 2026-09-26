@@ -71,8 +71,14 @@ export const useSurfaceDrag = ({
 				size,
 			});
 			const print = document.overlays[printZoneId].print;
+			// A print now tiles the whole zone, so on touch every press would
+			// otherwise grab it instead of orbiting the camera; touch users
+			// still reposition it with the Position X/Y sliders.
 			const printGrab =
-				layer === null && print !== null && printAspect !== null
+				layer === null &&
+				print !== null &&
+				printAspect !== null &&
+				event.pointerType !== 'touch'
 					? findPrintAt({ print, position: hit.position, size, aspect: printAspect })
 					: null;
 

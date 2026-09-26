@@ -134,3 +134,51 @@
 	font-family: var(--font-family-numeric);
 	font-size: var(--font-size-0);
 }
+
+// Below tablet width the steps panel becomes a full-width horizontal strip
+// (docs/features/builder.md "Layout"): steps run as scrollable chips, the
+// active step's options drop to their own scrollable row underneath it.
+@include below-tablet {
+	.steps {
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: flex-start;
+		overflow-x: auto;
+	}
+
+	.step {
+		flex: none;
+
+		&[data-active='true'] {
+			display: contents;
+		}
+	}
+
+	.stepButton {
+		width: auto;
+		white-space: nowrap;
+	}
+
+	.index,
+	.stepDescription {
+		display: none;
+	}
+
+	.options {
+		flex: 0 0 100%;
+		flex-direction: row;
+		flex-wrap: wrap;
+		padding: 0 var(--space-2) var(--space-2);
+
+		> li {
+			flex: none;
+		}
+	}
+
+	.option {
+		width: auto;
+		white-space: nowrap;
+
+		@include touch-target;
+	}
+}

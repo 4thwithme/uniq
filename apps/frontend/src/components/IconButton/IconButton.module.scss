@@ -1,6 +1,10 @@
+@use '../../styles/mixins' as *;
+
 .iconButton {
 	width: var(--control-height-md);
 	padding: 0;
+
+	@include touch-target;
 
 	&[data-size='sm'] {
 		width: var(--control-height-sm);

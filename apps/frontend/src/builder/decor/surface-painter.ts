@@ -246,8 +246,7 @@ const paintPrint = ({
 				const rowOffset = (row - (rows - 1) / 2) * drawHeight;
 				drawWrapped({
 					x: u * width,
-					y:
-						(1 - band.centerV) * height + (print.offsetY - 0.5) * bandHeight + rowOffset,
+					y: (1 - band.centerV) * height + (print.offsetY - 0.5) * bandHeight + rowOffset,
 					width,
 					height,
 					draw: ({ x, y }) => {

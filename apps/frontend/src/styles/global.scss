@@ -17,6 +17,19 @@ body,
 	overflow: hidden;
 }
 
+// Below tablet width the builder becomes a normal scrolling page instead of
+// a fixed-height app shell (docs/features/builder.md "Layout") — 100dvh
+// locks are unreliable once the mobile browser chrome collapses/expands.
+@media (width <= 900px) {
+	html,
+	body,
+	#root {
+		height: auto;
+		min-height: 100dvh;
+		overflow: visible;
+	}
+}
+
 body {
 	background: var(--color-bg);
 	color: var(--color-text);

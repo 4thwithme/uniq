@@ -114,7 +114,10 @@ export const paintButtCapFace = ({
 			context.lineWidth = size * 0.025 * CAP_BADGE_SCALE;
 			for (const side of [-1, 1]) {
 				context.beginPath();
-				context.moveTo(side * size * 0.2 * CAP_BADGE_SCALE, -size * 0.13 * CAP_BADGE_SCALE);
+				context.moveTo(
+					side * size * 0.2 * CAP_BADGE_SCALE,
+					-size * 0.13 * CAP_BADGE_SCALE,
+				);
 				context.bezierCurveTo(
 					side * size * 0.07 * CAP_BADGE_SCALE,
 					-size * 0.06 * CAP_BADGE_SCALE,

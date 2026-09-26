@@ -1,6 +1,6 @@
 import { ContactShadows, Grid, OrbitControls } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
-import { Suspense } from 'react';
+import { Canvas, useThree } from '@react-three/fiber';
+import { Suspense, useEffect } from 'react';
 
 import { CAMERA_LIMITS } from '@builder/controls/camera-moves';
 import { CAMERA_VIEWS } from '@builder/controls/camera-views';
@@ -20,6 +20,17 @@ const CAMERA_POSITION = CAMERA_VIEWS.overview.position;
 const CAMERA_TARGET = CAMERA_VIEWS.overview.target;
 const FLOOR_Y = -0.8;
 
+// frameloop="demand" only redraws on invalidate(); a CSS-driven layout jump
+// (e.g. the mobile viewport going fullscreen) resizes the canvas element
+// without any prop change reaching the scene, so force a fresh frame.
+function InvalidateOnResize({ signal }: { signal: unknown }): null {
+	const invalidate = useThree((state) => state.invalidate);
+	useEffect(() => {
+		invalidate();
+	}, [signal, invalidate]);
+	return null;
+}
+
 interface BuilderCanvasProps {
 	colors: SceneColors;
 	printImage: PrintImage | null;
@@ -27,6 +38,7 @@ interface BuilderCanvasProps {
 	focus: CameraFocus;
 	lighting: LightingPresetId;
 	isLightingAnimated: boolean;
+	resizeSignal?: unknown;
 }
 
 export function BuilderCanvas({
@@ -36,6 +48,7 @@ export function BuilderCanvas({
 	focus,
 	lighting,
 	isLightingAnimated,
+	resizeSignal,
 }: BuilderCanvasProps): React.JSX.Element {
 	const zones = useDesignStore((state) => state.document.zones);
 	const overlays = useDesignStore((state) => state.document.overlays);
@@ -53,6 +66,7 @@ export function BuilderCanvas({
 			camera={{ position: CAMERA_POSITION, fov: 40, near: 0.005, far: 50 }}
 			frameloop="demand"
 		>
+			<InvalidateOnResize signal={resizeSignal} />
 			<SceneLighting
 				presetId={lighting}
 				baseBackground={colors.background}
