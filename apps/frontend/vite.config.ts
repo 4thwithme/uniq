@@ -7,6 +7,7 @@ const fromSrc = ({ dir }: { dir: string }): string =>
 	fileURLToPath(new URL(`./src/${dir}`, import.meta.url));
 
 export default defineConfig({
+	base: process.env['GITHUB_PAGES_BASE'] ?? '/',
 	plugins: [react()],
 	resolve: {
 		alias: {
