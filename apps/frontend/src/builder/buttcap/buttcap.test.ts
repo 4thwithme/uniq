@@ -317,7 +317,7 @@ describe('badge painter', () => {
 		});
 		expect(names({ calls, name: 'bezierCurveTo' })).toHaveLength(2);
 		expect(names({ calls, name: 'fillText' })).toHaveLength(0);
-		expect(createPath).not.toHaveBeenCalled();
+		expect(createPath).toHaveBeenCalledTimes(2);
 	});
 
 	it.each(['star', 'bolt'] as const)('fills the %s shape path', (presetId) => {
@@ -327,9 +327,9 @@ describe('badge painter', () => {
 			buttCap: withBadge({ badge: { kind: 'preset', presetId, colorId: 'white' } }),
 			createPath,
 		});
-		expect(createPath).toHaveBeenCalledTimes(1);
+		expect(createPath).toHaveBeenCalledTimes(3);
 		expect(names({ calls, name: 'fill' }).length).toBeGreaterThan(0);
-		expect(names({ calls, name: 'scale' })).toHaveLength(1);
+		expect(names({ calls, name: 'scale' })).toHaveLength(2);
 	});
 
 	it('draws no badge for none, no highlight when matte, and falls back on unknown colors', () => {
