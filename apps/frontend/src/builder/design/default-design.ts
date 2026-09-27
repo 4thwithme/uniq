@@ -18,7 +18,7 @@ export const createDefaultDesign = (): DesignDocument => ({
 		frame: { finish: 'gloss', fill: { kind: 'solid', color: '#030303' } },
 		throat: { finish: 'gloss', fill: { kind: 'solid', color: '#030303' } },
 	},
-	grip: { ...DEFAULT_GRIP, overgrip: null },
+	grip: structuredClone(DEFAULT_GRIP),
 	buttCap: structuredClone(DEFAULT_BUTT_CAP),
 	grommets: { ...DEFAULT_GROMMETS },
 	finishingTape: { ...DEFAULT_FINISHING_TAPE },
