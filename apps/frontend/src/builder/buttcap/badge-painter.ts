@@ -1,7 +1,14 @@
 /* eslint-disable no-param-reassign */
 import { findBadgeColor, findButtCapColor } from '@uniq/shared';
 
-import { CAP_BADGE_OFFSET_RATIO, CAP_BADGE_SCALE } from '@builder/decor/brand-logo';
+import {
+	CAP_BADGE_OFFSET_RATIO,
+	CAP_BADGE_SCALE,
+	CAP_LOGO_WIDTH_RATIO,
+	drawHeadIconLogo,
+	getLogoColor,
+	HEAD_ICON_LOGO,
+} from '@builder/decor/brand-logo';
 import { SHAPE_BOX, SHAPE_PATHS } from '@builder/decor/shape-paths';
 
 import type { PathFactory } from '@builder/decor/surface-painter';
@@ -72,6 +79,18 @@ export const paintButtCapFace = ({
 	context.beginPath();
 	context.arc(center, center, size * 0.42, 0, Math.PI * 2);
 	context.stroke();
+
+	const logoWidth = size * CAP_LOGO_WIDTH_RATIO;
+	const logoHeight = (logoWidth * HEAD_ICON_LOGO.height) / HEAD_ICON_LOGO.width;
+	context.globalAlpha = 1;
+	drawHeadIconLogo({
+		context,
+		createPath,
+		x: center - logoWidth / 2,
+		y: center - logoHeight / 2,
+		width: logoWidth,
+		color: getLogoColor({ background: capHex }),
+	});
 
 	if (badge.kind !== 'none') {
 		const badgeHex = findBadgeColor({ colorId: badge.colorId })?.hex ?? '#ffffff';
